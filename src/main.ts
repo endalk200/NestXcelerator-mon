@@ -6,7 +6,9 @@ import { contract } from "./api.contract";
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.setGlobalPrefix("api");
+  app.enableShutdownHooks();
 
   const openApiDocument = generateOpenApi(contract, {
     info: {

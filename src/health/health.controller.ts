@@ -4,13 +4,17 @@ import {
   HealthCheckService,
   HttpHealthIndicator,
   MemoryHealthIndicator,
+  PrismaHealthIndicator,
 } from "@nestjs/terminus";
+import { PrismaService } from "src/prisma/prisma.service";
 
 @Controller("health")
 export class HealthController {
   constructor(
     private health: HealthCheckService,
     private http: HttpHealthIndicator,
+    private prismaHealth: PrismaHealthIndicator,
+    private prisma: PrismaService,
     private memory: MemoryHealthIndicator,
   ) {}
 
@@ -26,6 +30,9 @@ export class HealthController {
         ),
       () => this.memory.checkHeap("memory_heap", 150 * 1024 * 1024),
       () => this.memory.checkRSS("memory_rss", 150 * 1024 * 1024),
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      async () => this.prismaHealth.pingCheck("prisma", this.prisma),
     ]);
   }
 }

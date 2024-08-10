@@ -1,0 +1,12 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Project "backedn" {
+  database_type: 'PostgreSQL'
+  Note: ''
+}
+
+Table Sample {
+  id String [pk]
+}
