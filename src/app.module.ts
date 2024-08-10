@@ -1,10 +1,16 @@
-import { Module } from '@nestjs/common';
-import { HealthService } from './health/health.service';
-import { HealthController } from './health/health.controller';
+import { Module } from "@nestjs/common";
+import { TsRestModule } from "@ts-rest/nest";
+import { HealthModule } from "./health/health.module";
+import { AppController } from "./app.controller";
 
 @Module({
-  imports: [],
-  controllers: [HealthController],
-  providers: [HealthService],
+  imports: [
+    TsRestModule.register({
+      isGlobal: true,
+      jsonQuery: true,
+    }),
+    HealthModule,
+  ],
+  controllers: [AppController],
 })
 export class AppModule {}
