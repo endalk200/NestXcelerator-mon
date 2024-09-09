@@ -4,6 +4,7 @@ import { userContract } from "./contracts/users.contract";
 import { TsRestException } from "@ts-rest/nest";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { PasswordService } from "src/auth/password.service";
+import { safeAwait } from "src/utils/safe-await";
 
 @Injectable()
 export class UsersService {
@@ -18,8 +19,8 @@ export class UsersService {
     email: string;
     password: string;
   }) {
-    try {
-      const user = await this.prisma.user.create({
+    const [user, error] = await safeAwait(
+      this.prisma.user.create({
         data: {
           firstName: data.firstName,
           lastName: data.lastName,
@@ -38,10 +39,9 @@ export class UsersService {
           createdAt: true,
           updatedAt: true,
         },
-      });
-
-      return user;
-    } catch (error) {
+      }),
+    );
+    if (error != null) {
       if (
         error instanceof PrismaClientKnownRequestError &&
         error.code === "P2002"
@@ -55,8 +55,6 @@ export class UsersService {
         });
       }
 
-      console.log(error);
-
       throw new TsRestException(userContract.signup, {
         status: 500,
         body: {
@@ -66,5 +64,7 @@ export class UsersService {
         },
       });
     }
+
+    return user;
   }
 }
