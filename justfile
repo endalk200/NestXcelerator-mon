@@ -10,4 +10,4 @@ docker-down:
   docker-compose down
 
 watch:
-  nest start --debug --watch
+  npm run start:dev

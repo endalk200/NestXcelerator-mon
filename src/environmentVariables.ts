@@ -1,3 +1,3 @@
 export interface IEnvironmentVariables {
-  BCRYPT_SALT: string;
+  BCRYPT_SALT: number;
 }
