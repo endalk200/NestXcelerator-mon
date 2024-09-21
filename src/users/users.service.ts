@@ -1,10 +1,10 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { userContract } from "./contracts/users.contract";
 import { TsRestException } from "@ts-rest/nest";
 import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
-import { PasswordService } from "src/auth/password.service";
-import { safeAwait } from "src/utils/safe-await";
+import { PasswordService } from "../auth/password.service";
+import { safeAwait } from "../utils/safe-await";
 
 @Injectable()
 export class UsersService {
@@ -47,7 +47,7 @@ export class UsersService {
         error.code === "P2002"
       ) {
         throw new TsRestException(userContract.signup, {
-          status: 400,
+          status: 404,
           body: {
             code: "UserAlreadySignedUp",
             message: "User has already signed up",

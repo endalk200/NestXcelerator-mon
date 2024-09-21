@@ -1,7 +1,7 @@
 import { Injectable } from "@nestjs/common";
 import { hash, compare } from "bcrypt";
 import { ConfigService } from "@nestjs/config";
-import { IEnvironmentVariables } from "src/environmentVariables";
+import { IEnvironmentVariables } from "../environmentVariables";
 
 export type Salt = string | number;
 

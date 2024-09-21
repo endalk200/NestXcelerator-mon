@@ -1,5 +1,5 @@
 import { Injectable } from "@nestjs/common";
-import { PrismaService } from "src/prisma/prisma.service";
+import { PrismaService } from "../prisma/prisma.service";
 import { PasswordService } from "./password.service";
 import { TsRestException } from "@ts-rest/nest";
 import { authContract } from "./contracts/auth.contract";
