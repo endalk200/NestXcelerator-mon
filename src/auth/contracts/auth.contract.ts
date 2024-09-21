@@ -12,19 +12,28 @@ export const authContract = c.router(
       path: "/login",
       responses: {
         200: z.object({
-          id: z.string(),
-          firstName: z.string(),
-          lastName: z.string(),
-          email: z.string(),
-          isEmailVerified: z.boolean(),
-          isActive: z.boolean(),
+          auth: z.object({
+            token: z.string(),
+          }),
+          user: z.object({
+            id: z.string(),
+            firstName: z.string(),
+            lastName: z.string(),
+            email: z.string(),
+            isEmailVerified: z.boolean(),
+            isActive: z.boolean(),
+          }),
         }),
         400: z.object({
-          code: z.enum(["InvalidCredentials"]),
+          message: z.string(),
+        }),
+        401: z.object({
+          message: z.string(),
+        }),
+        423: z.object({
           message: z.string(),
         }),
         500: z.object({
-          code: z.enum(["InternalServerError"]),
           message: z.string(),
         }),
       },
@@ -45,6 +54,30 @@ export const authContract = c.router(
           .min(8, "Password must be at least 8 characters long"),
       }),
       summary: "Login",
+    },
+    me: {
+      method: "GET",
+      path: "/me",
+      responses: {
+        200: z.object({
+          id: z.string(),
+          firstName: z.string(),
+          lastName: z.string(),
+          email: z.string(),
+          isEmailVerified: z.boolean(),
+          isActive: z.boolean(),
+        }),
+        401: z.object({
+          message: z.string(),
+        }),
+        500: z.object({
+          message: z.string(),
+        }),
+      },
+      headers: z.object({
+        authorization: z.string(),
+      }),
+      summary: "Get current user information",
     },
   },
   {
