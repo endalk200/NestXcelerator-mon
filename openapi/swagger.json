@@ -90,18 +90,11 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "code": {
-                                            "type": "string",
-                                            "enum": [
-                                                "UserAlreadySignedUp"
-                                            ]
-                                        },
                                         "message": {
                                             "type": "string"
                                         }
                                     },
                                     "required": [
-                                        "code",
                                         "message"
                                     ]
                                 }
@@ -115,18 +108,11 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "code": {
-                                            "type": "string",
-                                            "enum": [
-                                                "InternalServerError"
-                                            ]
-                                        },
                                         "message": {
                                             "type": "string"
                                         }
                                     },
                                     "required": [
-                                        "code",
                                         "message"
                                     ]
                                 }
@@ -177,6 +163,157 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
+                                        "auth": {
+                                            "type": "object",
+                                            "properties": {
+                                                "token": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "required": [
+                                                "token"
+                                            ]
+                                        },
+                                        "user": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "firstName": {
+                                                    "type": "string"
+                                                },
+                                                "lastName": {
+                                                    "type": "string"
+                                                },
+                                                "email": {
+                                                    "type": "string"
+                                                },
+                                                "isEmailVerified": {
+                                                    "type": "boolean"
+                                                },
+                                                "isActive": {
+                                                    "type": "boolean"
+                                                }
+                                            },
+                                            "required": [
+                                                "id",
+                                                "firstName",
+                                                "lastName",
+                                                "email",
+                                                "isEmailVerified",
+                                                "isActive"
+                                            ]
+                                        }
+                                    },
+                                    "required": [
+                                        "auth",
+                                        "user"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "400",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "401",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "423": {
+                        "description": "423",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "500",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "required": [
+                                        "message"
+                                    ]
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/auth/me": {
+            "get": {
+                "summary": "Get current user information",
+                "tags": [
+                    "auth"
+                ],
+                "parameters": [
+                    {
+                        "name": "authorization",
+                        "in": "header",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "operationId": "me",
+                "responses": {
+                    "200": {
+                        "description": "200",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
                                         "id": {
                                             "type": "string"
                                         },
@@ -208,25 +345,18 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "400",
+                    "401": {
+                        "description": "401",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "code": {
-                                            "type": "string",
-                                            "enum": [
-                                                "InvalidCredentials"
-                                            ]
-                                        },
                                         "message": {
                                             "type": "string"
                                         }
                                     },
                                     "required": [
-                                        "code",
                                         "message"
                                     ]
                                 }
@@ -240,18 +370,11 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                        "code": {
-                                            "type": "string",
-                                            "enum": [
-                                                "InternalServerError"
-                                            ]
-                                        },
                                         "message": {
                                             "type": "string"
                                         }
                                     },
                                     "required": [
-                                        "code",
                                         "message"
                                     ]
                                 }
