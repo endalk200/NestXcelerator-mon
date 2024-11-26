@@ -1,9 +1,9 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
-import * as request from 'supertest';
-import { AppModule } from './../src/app.module';
+import { Test, TestingModule } from "@nestjs/testing";
+import { INestApplication } from "@nestjs/common";
+import * as request from "supertest";
+import { AppModule } from "./../src/app.module";
 
-describe('AppController (e2e)', () => {
+describe("AppController (e2e)", () => {
   let app: INestApplication;
 
   beforeEach(async () => {
@@ -12,13 +12,28 @@ describe('AppController (e2e)', () => {
     }).compile();
 
     app = moduleFixture.createNestApplication();
+    app.setGlobalPrefix("api");
     await app.init();
   });
 
-  it('/ (GET)', () => {
-    return request(app.getHttpServer())
-      .get('/')
-      .expect(200)
-      .expect('Hello World!');
+  describe("Create a new user (e2e)", () => {
+    it("/api/auth/signup (GET)", () => {
+      return request(app.getHttpServer())
+        .post("/api/auth/signup")
+        .send({
+          firstName: "John",
+          lastName: "Doe",
+          email: "email@example.com",
+          password: "assd",
+        })
+        .expect(400)
+        .expect({
+          data: { bodyResult: { issues: [] } },
+        });
+    });
+  });
+
+  afterAll(async () => {
+    await app.close();
   });
 });

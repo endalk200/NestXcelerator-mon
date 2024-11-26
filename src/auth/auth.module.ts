@@ -1,19 +1,30 @@
 import { Module } from "@nestjs/common";
-import { PasswordService } from "./password.service";
+import { PasswordService } from "./base/password.service";
 import { ConfigModule } from "@nestjs/config";
 import { AuthController } from "./auth.controller";
 import { AuthService } from "./auth.service";
-import { JwtModule } from "@nestjs/jwt";
+import { JwtModule, JwtSecretRequestType } from "@nestjs/jwt";
 import * as fs from "fs";
 import * as path from "path";
+import { TasksService } from "./tasks.service";
 
 @Module({
   imports: [
     ConfigModule,
     JwtModule.register({
       global: true,
-      privateKey: fs.readFileSync(path.join(__dirname, "../../ec-private.pem")),
-      publicKey: fs.readFileSync(path.join(__dirname, "../../ec-public.pem")),
+      secretOrKeyProvider: (requestType: JwtSecretRequestType) => {
+        switch (requestType) {
+          case JwtSecretRequestType.SIGN:
+            return fs.readFileSync(
+              path.join(__dirname, "../../ec-private.pem"),
+            );
+          case JwtSecretRequestType.VERIFY:
+            return fs.readFileSync(path.join(__dirname, "../../ec-public.pem"));
+          default:
+            return "hard!to-guess_secret";
+        }
+      },
       signOptions: {
         algorithm: "ES256", // Use ES256 for elliptic curve signing
         expiresIn: "1h", // Token expiration time
@@ -23,7 +34,7 @@ import * as path from "path";
       },
     }),
   ],
-  providers: [PasswordService, AuthService],
+  providers: [PasswordService, TasksService, AuthService],
   controllers: [AuthController],
   exports: [PasswordService],
 })

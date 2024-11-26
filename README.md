@@ -54,7 +54,7 @@ openssl ec -in ec-private.pem -pubout -out ec-public.pem
   - [x] Client SDK supporting `fetch` and `react-query`
 - [ ] Email integration
   - [x] Email template support using `react-email`
-  - [c] Email service integration:
+  - [x] Email service integration:
     - [x] Resend
     - [ ] SendGrid
     - [ ] MailGun
