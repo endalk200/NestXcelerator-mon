@@ -18,10 +18,12 @@ This template project will be used in the IDP to quickly kickstart backend proje
 
 - [Typescript](https://github.com/microsoft/TypeScript): Offers type safety when building backend APIs in nodejs
 - [NestJs](https://github.com/nestjs/nest): Provides best in class developer experience building backend APIs using nodejs
-- [Prisma](https://github.com/prisma/prisma)
+- [Prisma](https://github.com/prisma/prisma): Database ORM
 - [ts-rest](https://github.com/ts-rest/ts-rest): Provides excellent developer experience by empowering you to build fuly type safe API endpoints utilizing api contracts
 - [Postgres](https://github.com/postgres/postgres): a powerful, open source object-relational database system with over 35 years of active development that has earned
   it a strong reputation for reliability, feature robustness, and performance.
+- [React Email](https://react.email/docs/introduction): For building email templates
+- [Resend](https://resend.com): For sending emails
 
 ## Getting Started
 
@@ -43,14 +45,61 @@ openssl ec -in ec-private.pem -pubout -out ec-public.pem
 
 ## Features
 
+**General**
+
+- [x] API
+  - [x] Health check endpoints checking HTTP, memory health (rss and heap) and prisma database connection
+  - [x] Open API spec v3 support and UI using swagger
+  - [x] Typesafe API contract
+  - [x] Client SDK supporting `fetch` and `react-query`
+- [ ] Email integration
+  - [x] Email template support using `react-email`
+  - [c] Email service integration:
+    - [x] Resend
+    - [ ] SendGrid
+    - [ ] MailGun
+    - [ ] AWS SES
+- [ ] File upload using uploadthing
+
+**Database**
+
 - [x] Database support
   - [x] Postgres
-- [x] Health check endpoint
-  - [x] Http health check
-  - [x] Memory health check (rss and heap)
-  - [x] Prisma database connection
-- [ ] User management
-  - [x] Create user account and store password as hash
-- [x] Auth
-  - [x] Login endpoint
-  - [x] Auth guard
+  - [ ] MySQL
+- [x] ORM
+  - [x] Prisma
+  - [ ] Drizzle
+
+**Security**
+
+- [x] JWT based authentication. `accessToken` is secured by using `ES256` hashing via private public key pair.
+      (`ES256` is an Elliptic Curve Digital Signature Algorithm (ECDSA) that uses the P-256 curve and SHA-256 hash function.)
+- [x] Authentication guard verifying JWT expiration, issuer and audience for maximum security
+- [x] Authorization guard that implements Role Based Access Conrtol (RBAC)
+- [x] Securely stored password hashed using Blowfish cipher hashing algorithim.
+- [x] Issued refresh token is unique to the device and is stored securely
+- [x] Refresh token functionality while revoking used refresh token for one time use refresh tokens.
+- [x] Active session management including revokation.
+- [x] Rate limitter integration. Configured for:
+  - [x] Email verification endpoint
+  - [x] Password resent endpoint
+- [x] Password reset functionality
+
+**Deployment**
+
+- [x] Production ready dockerfile
+  - [x] Multi stage build for small docker image
+  - [x] Health check mechanisim for monitoring
+- [x] CI/CD
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](./LICENSE) file for details.
+
+## Contributing
+
+We welcome contributions! Please fork the repository, create a feature branch, and submit a pull request.
+
+## Maintainers
+
+This module is maintained by [Endalkachew Biruk](https://github.com/endalk200).
