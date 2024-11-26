@@ -44,4 +44,13 @@ USER ${user}
 ENV PORT=3000
 EXPOSE ${PORT}
 
+# --interval=30s: Checks every 30 seconds.
+# --timeout=5s: Times out after 5 seconds if no response.
+# --start-period=5s: Waits 5 seconds before starting checks.
+# --retries=3: Retries 3 times before marking the container as unhealthy.
+# CMD curl --fail http://localhost:${PORT}/api/health || exit 1: 
+#       Executes a curl command to check the health endpoint. If the command fails, it exits with a non-zero status, marking the container as unhealthy.
+HEALTHCHECK --interval=30s --timeout=5s --start-period=5s --retries=3 \
+  CMD curl --fail http://localhost:${PORT}/api/health || exit 1
+
 CMD [ "node", "./dist/main.js" ]

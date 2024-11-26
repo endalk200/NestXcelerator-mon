@@ -4,13 +4,68 @@ model User {
   firstName String
   lastName  String
 
-  email           String  @unique
-  isActive        Boolean @default(true)
+  email    String @unique
+  password String
+
+  isActive        Boolean @default(false)
   isEmailVerified Boolean @default(false)
-  password        String
+
+  emailVerification EmailVerification?
+  passwordReset     PasswordReset?
+
+  refreshToken RefreshToken[]
+
+  role Role @default(USER)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([email])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+model EmailVerification {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  code      String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model PasswordReset {
+  id        String   @id @default(cuid())
+  userId    String   @unique
+  code      String
+  expiresAt DateTime
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+}
+
+model RefreshToken {
+  id        String   @id @default(cuid())
+  token     String   @unique
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+
+  deviceId   String  @unique // Unique identifier for the device
+  deviceName String? // Optional: Store device name for debugging or UI
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId, deviceId])
 }
