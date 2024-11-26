@@ -5,6 +5,9 @@ import { AppController } from "./app.controller";
 import { UsersModule } from "./users/users.module";
 import { PrismaModule } from "./prisma/prisma.module";
 import { AuthModule } from "./auth/auth.module";
+import { EventEmitterModule } from "@nestjs/event-emitter";
+import { ThrottlerModule } from "@nestjs/throttler";
+import { ScheduleModule } from "@nestjs/schedule";
 
 @Module({
   imports: [
@@ -12,6 +15,14 @@ import { AuthModule } from "./auth/auth.module";
       isGlobal: true,
       jsonQuery: true,
     }),
+    EventEmitterModule.forRoot(),
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000, // miliseconds
+        limit: 10, // Limit request within the ttl
+      },
+    ]),
+    ScheduleModule.forRoot(),
     PrismaModule,
     HealthModule,
     AuthModule,
