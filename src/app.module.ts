@@ -8,6 +8,7 @@ import { AuthModule } from "./auth/auth.module";
 import { EventEmitterModule } from "@nestjs/event-emitter";
 import { ThrottlerModule } from "@nestjs/throttler";
 import { ScheduleModule } from "@nestjs/schedule";
+import { LoggerModule } from "nestjs-pino";
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { ScheduleModule } from "@nestjs/schedule";
       },
     ]),
     ScheduleModule.forRoot(),
+    LoggerModule.forRoot(),
     PrismaModule,
     HealthModule,
     AuthModule,
