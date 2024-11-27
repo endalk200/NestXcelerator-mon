@@ -1580,7 +1580,7 @@
         }
     },
     "info": {
-        "title": "Backend API",
+        "title": "Acme API Doc",
         "version": "1.0.0"
     }
 }
