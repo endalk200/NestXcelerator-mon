@@ -33,13 +33,13 @@ export class AuthenticationGuard implements CanActivate {
       );
       if (error != null) {
         if (error instanceof TokenExpiredError) {
-          this.logger.debug("Token is expired");
+          this.logger.error("Token is expired");
         } else if (error instanceof JsonWebTokenError) {
-          this.logger.debug("Invalid token");
+          this.logger.error("Invalid token");
         } else if (error instanceof NotBeforeError) {
-          this.logger.debug("Token is not active");
+          this.logger.error("Token is not active");
         } else {
-          this.logger.debug("Failed to verify token");
+          this.logger.error("Failed to verify token");
         }
       }
       request["user"] = {

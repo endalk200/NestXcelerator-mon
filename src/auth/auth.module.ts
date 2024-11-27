@@ -7,6 +7,7 @@ import { JwtModule, JwtSecretRequestType } from "@nestjs/jwt";
 import * as fs from "fs";
 import * as path from "path";
 import { TasksService } from "./tasks.service";
+import { BaseAuthService } from "./base/auth.service.base";
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { TasksService } from "./tasks.service";
       },
     }),
   ],
-  providers: [PasswordService, TasksService, AuthService],
+  providers: [BaseAuthService, PasswordService, TasksService, AuthService],
   controllers: [AuthController],
   exports: [PasswordService],
 })

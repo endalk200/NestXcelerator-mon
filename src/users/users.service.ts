@@ -55,7 +55,7 @@ export class UsersService {
       ) {
         this.logger.error(`DB operation failure due to unique contraint.`);
         throw new TsRestException(userContract.signup, {
-          status: 404,
+          status: 400,
           body: {
             message: "User has already signed up",
           },

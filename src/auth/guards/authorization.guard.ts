@@ -3,6 +3,7 @@ import {
   ExecutionContext,
   ForbiddenException,
   Injectable,
+  Logger,
   UnauthorizedException,
 } from "@nestjs/common";
 import { Reflector } from "@nestjs/core";
@@ -10,6 +11,8 @@ import { IPermissionSchema, permissionSchema } from "./permissions";
 
 @Injectable()
 export class AuthorizationGuard implements CanActivate {
+  private readonly logger = new Logger(AuthorizationGuard.name);
+
   constructor(private reflector: Reflector) {}
 
   canActivate(context: ExecutionContext): boolean {
@@ -19,11 +22,8 @@ export class AuthorizationGuard implements CanActivate {
         context.getHandler(),
       ) || [];
 
-    // console.log("requiredPermissions: ", requiredPermissions);
-
     const request = context.switchToHttp().getRequest();
     const user = request["user"]; // Ensure AuthenticationGuard sets this
-    // console.log("userRole: ", user["role"]);
 
     if (!user) {
       throw new UnauthorizedException("User not authenticated");
@@ -42,8 +42,12 @@ export class AuthorizationGuard implements CanActivate {
     );
 
     if (!hasAllPermissions) {
+      this.logger.error(
+        `User with role ${user.role} does not have permission to perform this action.`,
+        { requiredPermissions: requiredPermissions, role: user.role },
+      );
       throw new ForbiddenException(
-        `User with role ${user.role} does not have permission to perform the requested action.`,
+        `User with role ${user.role} does not have permission to perform this action.`,
       );
     }
 
