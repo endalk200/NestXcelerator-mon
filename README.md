@@ -14,6 +14,21 @@ NestXcelerator provides a solid foundation equipped with all the essential featu
 The concept of [internal developer platform (IDP)](https://internaldeveloperplatform.org/) is something I am really interested in for a while. This projects is meant to server as template for an IDP I'm building.
 This template project will be used in the IDP to quickly kickstart backend projects with sensible defaults and best practices thus boosting developer productivity.
 
+## Table of Contents
+
+- [Introduction](#introduction)
+- [Technologies](#technologies)
+- [Getting Started](#getting-started)
+- [Documentation](./docs/README.md)
+  - [API Design and Implementation Workflow](./docs/api-design.md)
+  - [Database Design and Implementation Workflow](./docs/db-design.md)
+  - [Security Considerations](./docs/security.md)
+  - [Deployment Guide](./docs/deployment-guide.md)
+- [Features](#features)
+- [License](./LICENSE)
+- [Contributors](#contributors)
+- [Maintainers](#maintainers)
+
 ## Technologies
 
 - [Typescript](https://github.com/microsoft/TypeScript): Offers type safety when building backend APIs in nodejs
